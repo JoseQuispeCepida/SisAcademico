@@ -3,7 +3,9 @@ using SisAcademico.Entities;
 using SisAcademico.Negocio.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,29 +13,40 @@ namespace SisAcademico.Negocio
 {
     public class EstudianteNegocio : IEstudianteRepositorio
     {
-        AcademicoContexto bd = new AcademicoContexto();
+        AcademicoContexto db = new AcademicoContexto();
 
-        public List<Estudiante> ListarEstudiantes(){
-            return bd.estudiante.ToList();
-        }
         public void Actualizar(Estudiante estudiante)
         {
-            throw new NotImplementedException();
+            db.Entry(estudiante).State = EntityState.Modified;
+            db.SaveChanges();
         }
 
         public void Agregar(Estudiante estudiante)
         {
-            throw new NotImplementedException();
+            db.estudiante.Add(estudiante);
+            db.SaveChanges();
         }
 
-        public Estudiante Buscar()
+        public List<Estudiante> ListarEstudiantes()
         {
-            throw new NotImplementedException();
+            var query = from x in db.estudiante
+                        orderby x.Id
+                        select x;
+            return query.ToList();
+            //return db.estudiante.ToList();
+        }
+        public List<Estudiante> ListarEstudiantesxNombre(string nombre)
+        {
+            var query = from x in db.estudiante
+                        orderby x.Nombres.Contains(nombre)
+                        select x;
+            return query.ToList();
         }
 
-        public List<Estudiante> FiltroID(int id)
+        public Estudiante Buscar(int id)
         {
-            throw new NotImplementedException();
+            var Busqueda = db.estudiante.Find(id);
+            return Busqueda;
         }
     }
 }

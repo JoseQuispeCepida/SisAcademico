@@ -13,6 +13,7 @@ namespace SisAcademico.DATOS
     {
         public AcademicoContexto() : base("cadenaConexion1")
         {
+
         }
         public virtual DbSet<Estudiante> estudiante { get; set; }
     }

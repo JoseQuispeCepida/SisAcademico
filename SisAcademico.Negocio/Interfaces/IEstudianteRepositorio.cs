@@ -12,7 +12,7 @@ namespace SisAcademico.Negocio.Interfaces
         void Agregar(Estudiante estudiante);
         void Actualizar(Estudiante estudiante);
         List<Estudiante> ListarEstudiantes();
-        Estudiante Buscar();
-        List<Estudiante> FiltroID(int id);
+        List<Estudiante> ListarEstudiantesxNombre(String nombre);
+        Estudiante Buscar(int id);
     }
 }
